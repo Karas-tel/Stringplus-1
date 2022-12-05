@@ -1632,7 +1632,6 @@ int main() {
     no_failed += srunner_ntests_failed(runner);
     srunner_free(runner);
   }
-  if (no_failed == 0) printf("TEST OK\n");
-    
+  if (no_failed == 0) printf("TEST OK\n");    
   return 0;
 }
