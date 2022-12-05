@@ -8,6 +8,8 @@
 #include "s21_string.h"
 
 #include <stdio.h>
+
+#include "type.h"
 #define BUFF_SIZE 256
 
 s21_size_t s21_strlen(const char *str) {

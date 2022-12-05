@@ -8,6 +8,8 @@
 #include "s21_sprintf.h"
 
 #include <math.h>
+
+#include "type.h"
 #ifdef NAN
 /* NAN is supported */
 #endif
