@@ -309,10 +309,10 @@ START_TEST(test_upper_lower) {
   buff3 = to_upper(buff2);
   ck_assert_str_eq(buff, buff3);
   free(buff3);
-  buff2 = NULL;
+  buff2 = s21_NULL;
   buff3 = to_upper(buff2);
   ck_assert_ptr_null(buff3);
-  buff2 = NULL;
+  buff2 = s21_NULL;
   buff3 = to_lower(buff2);
   ck_assert_ptr_null(buff3);
   buff3 = to_upper("");
@@ -349,7 +349,7 @@ START_TEST(test_trim) {
   buff3 = trim(buff, buff2);
   ck_assert_str_eq("", buff3);
   free(buff3);
-  buff = NULL;
+  buff = s21_NULL;
   buff2 = " ";
   buff3 = trim(buff, buff2);
   ck_assert_ptr_null(buff3);
@@ -581,9 +581,9 @@ START_TEST(test_strtok) {
   char* parser = " ,.";
   char* strOrigin = strtok(str57, parser);
   char* st21 = s21_strtok(str58, parser);
-  while (strOrigin != NULL) {
-    strOrigin = strtok(NULL, parser);
-    st21 = s21_strtok(NULL, parser);
+  while (strOrigin != s21_NULL) {
+    strOrigin = strtok(s21_NULL, parser);
+    st21 = s21_strtok(s21_NULL, parser);
     ck_assert_pstr_eq(strOrigin, st21);
   }
 }
@@ -1617,23 +1617,21 @@ Suite* sscanf_suite(void) {
   tcase_add_test(tc1_1, sscanf_test_n);
   tcase_add_test(tc1_1, sscanf_test_d);
   tcase_add_test(tc1_1, sscanf_test_i);
-  tcase_add_test(tc1_1, sscanf_test_e);
-  tcase_add_test(tc1_1, sscanf_test_f);
+  tcase_add_test(tc1_1, sscanf_test_e);  //
+  tcase_add_test(tc1_1, sscanf_test_f);  //
   tcase_add_test(tc1_1, sscanf_test_o);
-  // error
   tcase_add_test(tc1_1, sscanf_test_x);
   tcase_add_test(tc1_1, sscanf_test_u);
-  // error
   tcase_add_test(tc1_1, sscanf_test_s);
   tcase_add_test(tc1_1, sscanf_test_p);
   tcase_add_test(tc1_1, sscanf_test_proc);
-  tcase_add_test(tc1_1, sscanf_test_all);
+  tcase_add_test(tc1_1, sscanf_test_all);  //
 
   return s;
 }
 int main() {
   Suite* tests[] = {sprintf_suite(), additional_func_suite(), main_func_suite(),
-                    sscanf_suite(), NULL};
+                    sscanf_suite(), s21_NULL};
   int no_failed = 0;
   for (int i = 0; tests[i]; ++i) {
     SRunner* runner;

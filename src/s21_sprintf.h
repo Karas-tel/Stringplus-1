@@ -10,6 +10,16 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#if defined(__APPLE__) || defined(__MACH__)
+#define sys 1
+#elif defined(__linux__)
+#define sys 2
+#endif
+
+
+
+#define s21_NULL (void*) 0
+typedef long unsigned s21_size_t;
 
 typedef struct {
   int align;  // -
