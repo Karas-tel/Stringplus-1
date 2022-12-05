@@ -742,16 +742,6 @@ START_TEST(sscanf_test_s) {
   r2 = s21_sscanf("   werty kraken", "%*s%s", s2);
   ck_assert_str_eq(s1, s2);
   ck_assert_int_eq(r1, r2);
-  // error_test
-  //  r1 = sscanf("", "%s", s1);
-  //  r2 = s21_sscanf("", "%s", s2);
-  //  ck_assert_str_eq(s1, s2);
-  //  ck_assert_int_eq(r1, r2);
-  //  // error_test
-  //  r1 = sscanf("\0", "%s", s1);
-  //  r2 = s21_sscanf("\0", "%s", s2);
-  //  ck_assert_str_eq(s1, s2);
-  //  ck_assert_int_eq(r1, r2);
 
   r1 = sscanf("   weartewrsthxffdtsrhdfghdfghdfghdfghdfghdfghfdgпывапывапывапы",
               "%s", s1);
@@ -766,10 +756,22 @@ END_TEST
 START_TEST(sscanf_test_f) {
   int r1 = 0, r2 = 0;
   float f1 = 0, f2 = 0;
+  long double lf1 = 0, lf2 = 0;
+  double d1 = 0, d2 = 0;
 
   r1 = sscanf("12e-3", "%f", &f1);
   r2 = s21_sscanf("12e-3", "%f", &f2);
   ck_assert_int_eq(f1, f2);
+  ck_assert_int_eq(r1, r2);
+
+  r1 = sscanf("12e-3", "%lf", &d1);
+  r2 = s21_sscanf("12e-3", "%lf", &d2);
+  ck_assert_int_eq(d1, d2);
+  ck_assert_int_eq(r1, r2);
+
+  r1 = sscanf("12e-3", "%Lf", &lf1);
+  r2 = s21_sscanf("12e-3", "%Lf", &lf2);
+  ck_assert_int_eq(lf1, lf2);
   ck_assert_int_eq(r1, r2);
 
   r1 = sscanf("12e11", "%5f", &f1);
@@ -937,22 +939,6 @@ START_TEST(sscanf_test_x) {
   unsigned x3 = 0, x4 = 0;
   unsigned short x5 = 0, x6 = 0;
   unsigned long x7 = 0, x8 = 0;
-  // error_test
-  //  r1 = sscanf("0x12345", "%2x", &x1);
-  //  r2 = s21_sscanf("0x12345", "%2x", &x2);
-  //  ck_assert_uint_eq(x1, x2);
-  //  ck_assert_int_eq(r1, r2);
-  //  // new_error_test?
-  //  r1 = sscanf("-0x12345", "%4x", &x1);
-  //  r2 = s21_sscanf("-0x12345", "%4x", &x2);
-  //  ck_assert_uint_eq(x1, x2);
-  //  ck_assert_int_eq(r1, r2);
-  //
-  //  // new_error_test?
-  //  r1 = sscanf("0x12345", "%4x", &x1);
-  //  r2 = s21_sscanf("0x12345", "%4x", &x2);
-  //  ck_assert_uint_eq(x1, x2);
-  //  ck_assert_int_eq(r1, r2);
 
   r1 = sscanf("abcdef", "%x", &x1);
   r2 = s21_sscanf("abcdef", "%x", &x2);
@@ -996,6 +982,11 @@ START_TEST(sscanf_test_x) {
 
   r1 = sscanf("0x123", "%x", &x1);
   r2 = s21_sscanf("0x123", "%x", &x2);
+  ck_assert_uint_eq(x1, x2);
+  ck_assert_int_eq(r1, r2);
+
+  r1 = sscanf("-0x123", "%2x", &x1);
+  r2 = s21_sscanf("-0x123", "%2x", &x2);
   ck_assert_uint_eq(x1, x2);
   ck_assert_int_eq(r1, r2);
   //
@@ -1051,8 +1042,8 @@ START_TEST(sscanf_test_i) {
   long int i20, i21, i22, i23, i24, i25;
 
   // short int
-  r1 = sscanf("0x9 001  777", "%hi %hi %hi", &i7, &i9, &i11);
-  r2 = s21_sscanf("0x9 001  777", "%hi %hi %hi", &i8, &i10, &i12);
+  r1 = sscanf("-0x9 001  777", "%2hi %hi %hi", &i7, &i9, &i11);
+  r2 = s21_sscanf("-0x9 001  777", "%2hi %hi %hi", &i8, &i10, &i12);
   ck_assert_int_eq(i7, i8);
   ck_assert_int_eq(i9, i10);
   ck_assert_int_eq(i11, i12);
@@ -1441,7 +1432,7 @@ START_TEST(sscanf_test_all) {
   int d1 = 0, d2 = 0, i1 = 0, i2 = 0, n1 = 0, n2 = 0, r1 = 0, r2 = 0;
   float e1 = 0, e2 = 0, E1 = 0, E2 = 0, f1 = 0, f2 = 0, g1 = 0, g2 = 0, G1 = 0,
         G2 = 0;
-  unsigned o1 = 0, o2 = 0, x1 = 0, x2 = 0, X1 = 0, X2 = 0;  // u1 = 0, u2 = 0;
+  unsigned o1 = 0, o2 = 0, x1 = 0, x2 = 0, X1 = 0, X2 = 0;
   void *p1 = 0, *p2 = 0;
   char s1[100], s2[100], c1, c2, proc1[100] = {0}, proc2[100] = {0};
   short hi1 = 0, hi2 = 0, hd1 = 0, hd2 = 0;
@@ -1617,15 +1608,15 @@ Suite* sscanf_suite(void) {
   tcase_add_test(tc1_1, sscanf_test_n);
   tcase_add_test(tc1_1, sscanf_test_d);
   tcase_add_test(tc1_1, sscanf_test_i);
-  tcase_add_test(tc1_1, sscanf_test_e);  //
-  tcase_add_test(tc1_1, sscanf_test_f);  //
+  tcase_add_test(tc1_1, sscanf_test_e);
+  tcase_add_test(tc1_1, sscanf_test_f);
   tcase_add_test(tc1_1, sscanf_test_o);
   tcase_add_test(tc1_1, sscanf_test_x);
   tcase_add_test(tc1_1, sscanf_test_u);
   tcase_add_test(tc1_1, sscanf_test_s);
   tcase_add_test(tc1_1, sscanf_test_p);
   tcase_add_test(tc1_1, sscanf_test_proc);
-  tcase_add_test(tc1_1, sscanf_test_all);  //
+  tcase_add_test(tc1_1, sscanf_test_all);
 
   return s;
 }
@@ -1642,7 +1633,5 @@ int main() {
     srunner_free(runner);
   }
   if (no_failed == 0) printf("TEST OK\n");
-  //    char* buff = s21_strerror(-55);
-  //    printf("%s\n", buff);
   return 0;
 }

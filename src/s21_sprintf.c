@@ -173,7 +173,6 @@ void sprint_d(flags* flags, int* counter, int flag_zero, char** str,
     *((*str)++) = data->buffer[i];
     ++(*counter);
   }
-  // printf("counter = %d\n", *counter);
 }
 
 void sprint_f(flags* flags, int* counter, int flag_zero, char** str,
@@ -232,11 +231,7 @@ void sprint_g(flags* flags, int* counter, int flag_zero, char** str,
     sprint_f(flags, counter, flag_zero, str, data);
   } else {
     flags->acc -= 1;
-    // printf("val = %Lf, acc = %d\n", val, flags->acc);
     update_acc(val, flags, specifier, 'e', flag_zero);
-    // printf("val = %Lf, acc = %d\n", val, flags->acc);
-    // my_dtos(val_cp, data, flags, specifier);
-    // update_acc(data, flags);
     sprint_e(flags, counter, str, data, val, flag_zero, specifier);
   }
 }
@@ -300,7 +295,6 @@ void sprint_s(flags* flags, int* counter, char** str, va_list param) {
   _string tmp;
   _string_init(&tmp);
   int i = 0;
-  // printf("acc = %d\n", flags->acc);
   if (flags->dot && flags->acc < 0) flags->acc = 0;
 
   if (!flags->l) {
@@ -319,12 +313,6 @@ void sprint_s(flags* flags, int* counter, char** str, va_list param) {
   if (!flags->align) {
     shuffle_str(&tmp);
   }
-  //    while (temp != '\0') {
-  //        temp = va_arg(param, int);
-  //        data[qua++] = (char)temp;
-  //        printf("%c ", data[qua - 1]);
-  //    }
-
   while (tmp.buffer[i] != '\0') {
     *((*str)++) = tmp.buffer[i++];
     ++(*counter);
@@ -390,9 +378,6 @@ void read_flags(flags* flags, const char** format) {
   if ((**format >= '1' && **format <= '9') ||
       (flags->dot && **format >= '0' && **format <= '9')) {
     get_int_from_char(format, flags);
-    //        printf("acc = %d   ", flags->acc);
-    //        printf("w = %d\n", flags->width);
-
   } else if (**(format) == '-')
     flags->align = 1;
   else if (**(format) == '+')
@@ -419,9 +404,8 @@ void apply_acc_d(flags* flags, _string* data, int zero_flag) {
     --data->pos;
   }
   for (; data->pos < flags->acc;) data->buffer[data->pos++] = '0';
-  if (flags->sign && zero_flag >= 0) data->buffer[data->pos++] = '+';
-  //    if (flags->zero &&flags->sign &&flags->acc < 0 && zero_flag >= 0)
-  //        data->buffer[data->pos++] = '+';
+  if (flags->sign && zero_flag >= 0)
+    data->buffer[data->pos++] = '+';
   else if (zero_flag < 0)
     data->buffer[data->pos++] = '-';
   else if (flags->space)
@@ -435,8 +419,6 @@ void apply_acc_d(flags* flags, _string* data, int zero_flag) {
 }
 
 void apply_width_d(flags* flags, _string* data, int zero_flag, int flag_d_f) {
-  //    for (int i = 0; i < data->pos; ++i)
-  //        printf("i = %d  %c", i, data->buffer[i]);
   if (!flags->align) shuffle_str(data);
   if (flags->zero && (flags->sign || zero_flag < 0 || flags->space) &&
       ((flags->acc < 0 && !flag_d_f) || flag_d_f)) {
@@ -444,7 +426,6 @@ void apply_width_d(flags* flags, _string* data, int zero_flag, int flag_d_f) {
     --flags->width;
   }
   for (; data->pos < flags->width;) {
-    // printf("hi\n");
     if (flags->zero && flags->acc <= 0)
       data->buffer[data->pos++] = '0';
     else
@@ -460,9 +441,6 @@ void apply_width_d(flags* flags, _string* data, int zero_flag, int flag_d_f) {
            flags->space)
     data->buffer[data->pos++] = ' ';
   if (!flags->align) shuffle_str(data);
-  //    for (int i = 0; i < data->pos; ++i)
-  //       // printf("%c ", data->buffer[i]);
-  //    printf("\n");
 }
 
 void round_acc(_vector* vec) {
@@ -555,11 +533,7 @@ int check_inf_nan(long double val, _string* data, flags* flags,
     data->buffer[data->pos++] = 'I';
     data->buffer[data->pos++] = 'N';
     data->buffer[data->pos++] = 'F';
-  } /*else if (val == 0 && 1 / val == -INFINITY) {
-      data->buffer[data->pos++] = '-';
-      data->buffer[data->pos++] = '0';
-  } */
-  else {
+  } else {
     result = 0;
   }
   return result;
@@ -603,7 +577,6 @@ int my_dtoe(long double* val, int zero_flag) {
 
 void update_acc(long double val, flags* flags, char specifier, char e_or_f,
                 int zero_flag) {
-  // printf("s = %s acc = %d\n", data->buffer, flags->acc);
   _string temp;
   _string_init(&temp);
   if (e_or_f == 'f')
@@ -614,7 +587,6 @@ void update_acc(long double val, flags* flags, char specifier, char e_or_f,
     int i = temp.pos - 1;
     while (i > 0 && temp.buffer[i] == '0') {
       flags->acc -= 1;
-      //   printf("data = %c, acc = %d\n", temp.buffer[i], flags->acc);
       --i;
     }
   }
@@ -631,17 +603,7 @@ void type_conversion_d(long long* val, flags* flags) {
         *val += 65536;
       }
     }
-  } /*else if (!flags->l && (*val > 2147483647 || *val < -2147483648)) {
-      if (*val > 0) {
-          while (*val > 2147483647 || *val < -2147483648) {
-              *val -= 4294967298;
-          }
-      } else {
-          while (*val > 2147483647 || *val < -2147483648) {
-              *val += 4294967298;
-          }
-      }
-  }*/
+  }
 }
 
 void supp_d(flags* flags, va_list param, char** str, int* counter) {
