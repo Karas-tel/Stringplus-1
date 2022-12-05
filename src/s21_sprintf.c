@@ -571,10 +571,6 @@ int my_dtoe(long double* val, int zero_flag) {
   return exp;
 }
 
-//функция для урезания лишний нолей при спецификаторе G или g
-//предварительно представляет число в заданном виде и уменьшает точность
-//на кол-во нолей в конце
-
 void update_acc(long double val, flags* flags, char specifier, char e_or_f,
                 int zero_flag) {
   _string temp;
