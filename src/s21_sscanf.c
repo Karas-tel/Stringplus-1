@@ -2,6 +2,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 
 _bool is_digit(char c) { return c <= '9' && c >= '0' ? TRUE : FALSE; }
 
@@ -786,7 +788,7 @@ int va_s21_sscanf(const char *string, const char *format, va_list scanf_arg) {
     }
   }
   va_end(scanf_arg);
-  if (buff.b_string != NULL) {
+  if (buff.b_string != s21_NULL) {
     free(buff.b_string);
   }
   return buff.counter;

@@ -289,8 +289,8 @@ void sprint_x(flags* flags, int* counter, int flag_zero, char** str,
 }
 
 void sprint_s(flags* flags, int* counter, char** str, va_list param) {
-  char* data = NULL;
-  wchar_t* data_t = NULL;
+  char* data = s21_NULL;
+  wchar_t* data_t = s21_NULL;
   if (flags->l)
     data_t = va_arg(param, wchar_t*);
   else
@@ -523,6 +523,8 @@ int check_inf_nan(long double val, _string* data, flags* flags,
                   char specifier) {
   int result = 1;
   if (isnan(val) && specifier != 'E') {
+      if (sys == 2)
+          data->buffer[data->pos++] = '-';
     data->buffer[data->pos++] = 'n';
     data->buffer[data->pos++] = 'a';
     data->buffer[data->pos++] = 'n';
