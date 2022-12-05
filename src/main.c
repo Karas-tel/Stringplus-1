@@ -1642,7 +1642,7 @@ int main() {
     srunner_free(runner);
   }
   if (no_failed == 0) printf("TEST OK\n");
-    char* buff = s21_strerror(-55);
-    printf("%s\n", buff);
+//    char* buff = s21_strerror(-55);
+//    printf("%s\n", buff);
   return 0;
 }

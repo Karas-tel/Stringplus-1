@@ -156,12 +156,13 @@ size_t s21_strcspn(const char *str1, const char *str2) {
 // vivod oshibok po ix nomery
 char *s21_strerror(int errnum) {
   char *res = NULL;
-  static char tmp[250];
+  
   // char str[250] = "Unknown error: ";
   if (errnum >= MIN_ERRLIST && errnum < MAX_ERRLIST) {
     res = (char *)s21_errlist[errnum];
 
   } else {
+      static char tmp[250];
       if (MAX_ERRLIST == 134)
     s21_sprintf(tmp, "Unknown error %d", errnum);
       else if (MAX_ERRLIST == 107)
