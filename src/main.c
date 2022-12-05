@@ -1042,8 +1042,8 @@ START_TEST(sscanf_test_i) {
   long int i20, i21, i22, i23, i24, i25;
 
   // short int
-  r1 = sscanf("-0x9 001  777", "%2hi %hi %hi", &i7, &i9, &i11);
-  r2 = s21_sscanf("-0x9 001  777", "%2hi %hi %hi", &i8, &i10, &i12);
+  r1 = sscanf("-0x9 001  777", "%hi %hi %hi", &i7, &i9, &i11);
+  r2 = s21_sscanf("-0x9 001  777", "%hi %hi %hi", &i8, &i10, &i12);
   ck_assert_int_eq(i7, i8);
   ck_assert_int_eq(i9, i10);
   ck_assert_int_eq(i11, i12);
@@ -1633,5 +1633,6 @@ int main() {
     srunner_free(runner);
   }
   if (no_failed == 0) printf("TEST OK\n");
+    
   return 0;
 }
