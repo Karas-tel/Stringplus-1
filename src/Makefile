@@ -9,7 +9,7 @@ ubuntu: clean s21_string.a test_ubuntu gcov_report
 test: main.c s21_sprintf.c s21_string.c s21_sscanf.c
 	gcc -o test $(CFLAGS) --coverage main.c s21_sprintf.c s21_string.c s21_sscanf.c -lcheck -lpthread -lm  -I /usr/local/include -L/usr/local/lib
 	
-test_ubuntu: main.c s21_sprintf.c s21_string.c s21_sscanf.c
+test_ubuntu: main.c s21_string.a
 	gcc -o test $(CFLAGS) --coverage main.c s21_sprintf.c s21_string.c s21_sscanf.c -lcheck -lm -lpthread -lsubunit
 	
 s21_string.a: s21_sprintf.o s21_string.o s21_sscanf.o
@@ -47,4 +47,3 @@ git:
 	git add Makefile
 	git commit -m "add from make"
 	git push
-
