@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "s21_string.h"
 
 _bool is_digit(char c) { return c <= '9' && c >= '0' ? TRUE : FALSE; }
 
