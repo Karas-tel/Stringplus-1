@@ -523,8 +523,7 @@ int check_inf_nan(long double val, _string* data, flags* flags,
                   char specifier) {
   int result = 1;
   if (isnan(val) && specifier != 'E') {
-      if (sys == 2)
-          data->buffer[data->pos++] = '-';
+    if (sys == 2) data->buffer[data->pos++] = '-';
     data->buffer[data->pos++] = 'n';
     data->buffer[data->pos++] = 'a';
     data->buffer[data->pos++] = 'n';

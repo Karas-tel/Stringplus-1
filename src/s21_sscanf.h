@@ -2,7 +2,7 @@
 #define SRC_SSCANF_H_
 
 #include <stdarg.h>
-#define s21_NULL (void*) 0
+#define s21_NULL (void *)0
 typedef long unsigned s21_size_t;
 
 typedef enum {
