@@ -206,55 +206,30 @@ int read_double(const char *string, struct Pattern patt, long double *d) {
   }
   *d = ld;
   free(buf_w);
-  // printf("\n%d %d\n", patt.width, buff->b_int);
-  // _bool flag = TRUE, width_flag = FALSE, flag_z = TRUE;
-  // int width = 0;
-  // if (patt.width == 0) width_flag = TRUE;
-
-  // if (*string == '-') flag_z = FALSE;
-  // if (*string == '-' || *string == '+') {
-  //   width++;
-  //   displacement++;
-  //   string++;
-  // }
-  // long double answ = 0.0;
-  // while (*string != '.' && *string != ' ' && (patt.width > width ||
-  // width_flag == TRUE) && flag &&
-  //        is_digit(*string) == TRUE) {
-  //   answ += *string - '0' + answ * 10;
-  //   string++;
-  // }
-  // double m = 10.0;
-  // while ((patt.width > width || width_flag == TRUE) && flag &&
-  //        is_digit(*string) == TRUE) {
-  //   answ += (*string - '0') / m;
-  //   string++;
-  // }
-  // // sscanf(string, "%Lf", d);
-  // *d = answ;
-  // if (flag_z == FALSE) *d *= -1;
-  // buff->b_long_double = *d;
   return displacement;
 }
 
 int read_str(const char *string, struct Pattern patt, struct Buffer *buff) {
-  _bool width_flag = FALSE;
-  if (patt.width == 0) width_flag = TRUE;
-  int size = patt.width != 0 ? patt.width : 100;
-  buff->b_string = (char *)realloc(buff->b_string, (sizeof(char) * size));
-  // buff->b_string = (char *)malloc(sizeof(char) * size);
   int displacement = 0;
-  while (*string != ' ' && *string != '\n' && *string != '\t' &&
-         *string != '\0' && (patt.width > displacement || width_flag == TRUE)) {
-    buff->b_string[displacement] = *string;
-    string++;
-    displacement++;
-    if (size < displacement + 1) {
-      size *= 1.5;
-      buff->b_string = (char *)realloc(buff->b_string, (sizeof(char) * size));
+  if (*string != '\0') {
+    _bool width_flag = FALSE;
+    if (patt.width == 0) width_flag = TRUE;
+    int size = patt.width != 0 ? patt.width : 100;
+    buff->b_string = (char *)realloc(buff->b_string, (sizeof(char) * size));
+
+    while (*string != ' ' && *string != '\n' && *string != '\t' &&
+           *string != '\0' &&
+           (patt.width > displacement || width_flag == TRUE)) {
+      buff->b_string[displacement] = *string;
+      string++;
+      displacement++;
+      if (size < displacement + 1) {
+        size *= 1.5;
+        buff->b_string = (char *)realloc(buff->b_string, (sizeof(char) * size));
+      }
     }
+    buff->b_string[displacement] = '\0';
   }
-  buff->b_string[displacement] = '\0';
   return displacement;
 }
 
