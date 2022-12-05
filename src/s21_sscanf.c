@@ -21,12 +21,6 @@ int s21_skip(const char *string, const char *format, int *str_diss,
   }
   *str_diss += skip_space(string);
   *form_diss += skip_space(format);
-  // if ((skip = skip_space(format)) != 0) {
-  //   *str_diss += skip_space(string);
-  //   *form_diss += skip;
-  // } else {
-
-  // }
   return 0;
 }
 
@@ -320,7 +314,6 @@ int read_i_int(const char *string, struct Pattern patt, struct Buffer *buff) {
     } else {
       displacement += read_u_int8(string, patt, buff, &answ);
     }
-    // displacement += read_u_int8(string, patt, buff, &answ);
   } else {
     if (patt.width != 0) {
       patt.width -= width;
@@ -329,7 +322,6 @@ int read_i_int(const char *string, struct Pattern patt, struct Buffer *buff) {
     } else {
       displacement += read_u_int10(string, patt, buff, &answ);
     }
-    // displacement += read_u_int10(string, patt, buff, &answ);
   }
 
   if (flag_z == FALSE) answ *= -1;
@@ -477,7 +469,6 @@ int read_string(const char *string, struct Pattern patt, struct Buffer *buff) {
   unsigned long int uli;
   switch (patt.spec) {
     case C_SPEC:
-      // char c;
       displacement = read_char(string, &c);
       buff->b_char = c;
       break;
