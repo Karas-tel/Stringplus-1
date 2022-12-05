@@ -1,20 +1,21 @@
 #CFLAGS=-Wall -Werror -Wextra
-CFLAGS = -Wall -Werror -Wextra -std=c11 --coverage
+CFLAGS = -Wall -Werror -Wextra -std=c11
 
 
 all: clean s21_string.a test gcov_report
 
 ubuntu: clean s21_string.a test_ubuntu gcov_report
 
-test: main.c s21_string.a
-	gcc -o test $(CFLAGS) main.c s21_string.a -lcheck -lpthread -lm  -I /usr/local/include -L/usr/local/lib
+test: main.c s21_sprintf.c s21_string.c s21_sscanf.c
+	gcc -o test $(CFLAGS) --coverage main.c s21_sprintf.c s21_string.c s21_sscanf.c -lcheck -lpthread -lm  -I /usr/local/include -L/usr/local/lib
 	
 test_ubuntu: main.c s21_string.a
 	gcc -o test $(CFLAGS) main.c s21_string.a -lcheck -lm -lpthread -lsubunit
 	
 s21_string.a: s21_sprintf.o s21_string.o s21_sscanf.o
-	ar r s21_string.a s21_string.o s21_sprintf.o s21_sscanf.o
-
+	ar rc s21_string.a s21_string.o s21_sprintf.o s21_sscanf.o
+	ranlib s21_string.a
+	
 s21_sprintf.o: s21_sprintf.c
 	gcc $(CFLAGS) -c s21_sprintf.c
 
